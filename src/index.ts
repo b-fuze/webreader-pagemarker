@@ -1,13 +1,12 @@
-import { styles } from "./styles";
+import { pageMarkerStyles, nestedTableOfContentStyles } from "./styles";
 import { fixMarkers } from "./markers";
+import { installStyles } from "./utils";
 
-addEventListener("load", () => {
-  // Setup styles
-  const styleElm = document.createElement("style");
-  styleElm.appendChild(new Text(styles));
-  document.head.appendChild(styleElm);
+// Setup styles
+installStyles(pageMarkerStyles);
+installStyles(nestedTableOfContentStyles);
+console.log("Applied styles");
 
-  // Fix markers on page
-  fixMarkers();
-});
+// Fix markers on page
+fixMarkers();
 

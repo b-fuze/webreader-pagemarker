@@ -1,4 +1,4 @@
-# webreader.io page number marker
+# webreader.io enhancer
 I need to reference page numbers for ebooks on webreader.io/cengage.
 Irritatingly, even though there _are_ page number markers, the UI itself doesn't
 render them. There's even a "go to page" feature, yet there's **no indication**
@@ -8,8 +8,15 @@ This userscript (find a build [here](dist/webreader.js)) add page
 markers to the page to indicate where page breaks are located as seen in the
 screenshot. The gradient effect shows when you hover the pagenumber.
 
+It also adds visual nesting to the table of contents, that before despite having
+hierarchy, confusingly lacked any indicate of how the hierarchy was structured.
+
 ## Screenshot
-![Screenshot](./assets/screenshot.png)
+Page numbers
+![Screenshot](./assets/screenshot-pagenumbers.png)
+
+Nesting
+![Screenshot](./assets/screenshot-nesting.png)
 
 ## License
 MIT

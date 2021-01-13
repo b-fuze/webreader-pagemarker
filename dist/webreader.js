@@ -4,7 +4,8 @@
 // @version      0.1.0
 // @description  Add page markers to webreader.io
 // @author       b-fuze
-// @match        https://ebooks.cenreader.com/api/v1/reader/*
+// @match        https://ebooks.cenreader.com/*
+// @run-at       document-end
 // @grant        none
 // ==/UserScript==
 
@@ -22,8 +23,43 @@
         }
         return out.join("");
     };
+    const parentObservers = new Map();
+    function persistChild(parent, child) {
+        parent.appendChild(child);
+        let list = parentObservers.get(parent);
+        if (!list) {
+            list = [];
+            parentObservers.set(parent, list);
+            // Observe parent for changes
+            let lastListener = null;
+            const observer = new MutationObserver(records => {
+                let reappend = records.find(r => r.removedNodes.length);
+                if (reappend) {
+                    clearTimeout(lastListener);
+                    lastListener = setTimeout(() => {
+                        for (const child of list) {
+                            if (child.parentNode !== parent) {
+                                parent.appendChild(child);
+                            }
+                        }
+                    }, 250);
+                }
+            });
+            observer.observe(parent, {
+                childList: true,
+            });
+        }
+        list.push(child);
+    }
+    const installStyles = (styles) => {
+        const styleElm = document.createElement("style");
+        styleElm.appendChild(new Text(styles));
+        // Ensure style element isn't removed
+        persistChild(document.head, styleElm);
+        return styleElm;
+    };
 
-    const styles = tag `
+    const pageMarkerStyles = tag `
   .sect2 {
     position: relative;
   }
@@ -61,6 +97,29 @@
     color: #222;
   }
 `;
+    const nestedTableOfContentStyles = tag `
+  ul.toc-nested .toc-item {
+    --indent-width: 25px;
+    padding-left: var(--indent-width);
+  }
+
+  ul.toc-nested .toc-item .toc-page-root {
+    position: relative;
+    --bf-border-color: #373737;
+    border-left: 1px solid var(--bf-border-color);
+  }
+
+  ul.toc-nested li:first-child .toc-item .toc-page-root::before {
+    content: "";
+    position: absolute;
+    display: block;
+    top: -1px;
+    right: 100%;
+    width: var(--indent-width);
+    height: 1px;
+    background: var(--bf-border-color);
+  }
+`;
 
     // const paragraphs = new Set<HTMLParagraphElement>();
     function pbLabel(page) {
@@ -81,13 +140,11 @@
         }
     }
 
-    addEventListener("load", () => {
-        // Setup styles
-        const styleElm = document.createElement("style");
-        styleElm.appendChild(new Text(styles));
-        document.head.appendChild(styleElm);
-        // Fix markers on page
-        fixMarkers();
-    });
+    // Setup styles
+    installStyles(pageMarkerStyles);
+    installStyles(nestedTableOfContentStyles);
+    console.log("Applied styles");
+    // Fix markers on page
+    fixMarkers();
 
 }());

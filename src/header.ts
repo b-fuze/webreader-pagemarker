@@ -4,7 +4,8 @@
 // @version      0.1.0
 // @description  Add page markers to webreader.io
 // @author       b-fuze
-// @match        https://ebooks.cenreader.com/api/v1/reader/*
+// @match        https://ebooks.cenreader.com/*
+// @run-at       document-end
 // @grant        none
 // ==/UserScript==
 

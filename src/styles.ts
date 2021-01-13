@@ -1,6 +1,6 @@
 import { tag as css, markerSelector, labelClass } from "./utils";
 
-export const styles = css`
+export const pageMarkerStyles = css`
   .sect2 {
     position: relative;
   }
@@ -38,3 +38,28 @@ export const styles = css`
     color: #222;
   }
 `;
+
+export const nestedTableOfContentStyles = css`
+  ul.toc-nested .toc-item {
+    --indent-width: 25px;
+    padding-left: var(--indent-width);
+  }
+
+  ul.toc-nested .toc-item .toc-page-root {
+    position: relative;
+    --bf-border-color: #373737;
+    border-left: 1px solid var(--bf-border-color);
+  }
+
+  ul.toc-nested li:first-child .toc-item .toc-page-root::before {
+    content: "";
+    position: absolute;
+    display: block;
+    top: -1px;
+    right: 100%;
+    width: var(--indent-width);
+    height: 1px;
+    background: var(--bf-border-color);
+  }
+`;
+
