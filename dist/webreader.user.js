@@ -96,6 +96,10 @@
     background: #DDD;
     color: #222;
   }
+
+  .${labelClass} * {
+    background: transparent !important;
+  }
 `;
     const nestedTableOfContentStyles = tag `
   ul.toc-nested .toc-item {

@@ -37,6 +37,10 @@ export const pageMarkerStyles = css`
     background: #DDD;
     color: #222;
   }
+
+  .${ labelClass } * {
+    background: transparent !important;
+  }
 `;
 
 export const nestedTableOfContentStyles = css`
