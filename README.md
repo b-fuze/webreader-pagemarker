@@ -13,9 +13,11 @@ hierarchy, confusingly lacked any indicate of how the hierarchy was structured.
 
 ## Screenshot
 Page numbers
+
 ![Screenshot](./assets/screenshot-pagenumbers.png)
 
 Nesting
+
 ![Screenshot](./assets/screenshot-nesting.png)
 
 ## License
