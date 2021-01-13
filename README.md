@@ -11,6 +11,14 @@ screenshot. The gradient effect shows when you hover the pagenumber.
 It also adds visual nesting to the table of contents, that before despite having
 hierarchy, confusingly lacked any indicate of how the hierarchy was structured.
 
+## How to use
+ 1. Install [Tampermonkey](https://www.tampermonkey.net/)
+
+ 2. Install this userscript by going [here](https://raw.githubusercontent.com/b-fuze/webreader-pagemarker/master/dist/webreader.user.js)
+
+ 3. Profit :')
+
+
 ## Screenshot
 Page numbers
 

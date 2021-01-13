@@ -5,7 +5,7 @@ import { outputToClipboard } from "./rollup/output-to-clipboard";
 export default {
   input: "src/index.ts",
   output: {
-    file: "dist/webreader.js",
+    file: "dist/webreader.user.js",
     format: "iife",
   },
   plugins: [
