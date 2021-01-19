@@ -32,6 +32,7 @@ export const pageMarkerStyles = css`
 
     font-size: 0.45em;
     line-height: normal;
+    user-select: none;
 
     border-left: 2px solid red;
     background: #DDD;
