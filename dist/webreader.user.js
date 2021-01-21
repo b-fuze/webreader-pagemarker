@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         WebReader Page Markers
 // @namespace    https://b-fuze.dev/
-// @version      0.1.2
+// @version      0.1.3
 // @description  Add page markers to webreader.io
 // @author       b-fuze
 // @match        https://ebooks.cenreader.com/*
@@ -126,7 +126,6 @@
   }
 `;
 
-    // const paragraphs = new Set<HTMLParagraphElement>();
     function pbLabel(page) {
         const label = document.createElement("label");
         label.classList.add(labelClass);
@@ -136,13 +135,36 @@
         label.appendChild(strong);
         return label;
     }
-    function fixMarkers() {
+    const pbGuard = Symbol();
+    function updateMarkers() {
         const pageBreaks = Array.from(document.querySelectorAll(markerSelector));
         for (const brk of pageBreaks) {
-            const pageNumber = +brk.getAttribute("title");
-            brk.appendChild(pbLabel(pageNumber));
-            brk.setAttribute("title", "Page " + pageNumber);
+            if (!brk[pbGuard]) {
+                const pageNumber = +brk.getAttribute("title");
+                brk.appendChild(pbLabel(pageNumber));
+                brk.setAttribute("title", "Page " + pageNumber);
+                brk[pbGuard] = true;
+            }
         }
+    }
+    const spanSet = new Set();
+    function fixMarkers() {
+        const observer = new MutationObserver(() => {
+            setTimeout(() => {
+                const oldSize = spanSet.size;
+                // Iterate the existing page numbers
+                for (const span of Array.from(document.querySelectorAll(markerSelector))) {
+                    spanSet.add(span);
+                }
+                if (oldSize !== spanSet.size) {
+                    updateMarkers();
+                }
+            }, 250);
+        });
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true,
+        });
     }
 
     const overriddenTemplates = {};
