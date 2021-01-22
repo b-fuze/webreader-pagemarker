@@ -79,7 +79,6 @@ export function attach() {
               const { deps, override } = overriddenControllers[componentName];
 
               function next(this: any, args: any[]) {
-                console.log("APPLYING", args);
                 return ctrl.apply(this, args.slice(deps.length));
               }
 

@@ -2,12 +2,15 @@ import { tag as html } from "./utils";
 import { overrideController, overrideTemplate } from "./attach-angular";
 
 export function accessibleSearchResult() {
-  overrideController("searchResultItem", [], function(args, next) {
-    const [ state ] = args;
+  overrideController("searchResultItem", ["Library"], function(args, next) {
+    const [ Library, state, stateParams ] = args;
+    const bookContentId = stateParams.book;
+    const book = Library.getBookByContentId(bookContentId);
+    const page = book.getPage(this.result.pageContentId) || book.getPageByPath(this.result.pageContentId);
 
     this.bfuzeGetPageLink = function() {
       const bookId = state.params.book;
-      const pageId = state.params.page;
+      const pageId = page.id;
       const hlId = state.params.highlight;
       return `https://ebooks.cenreader.com/#!/reader/${ bookId }/page/${ pageId }?highlight=${ hlId }&scrollTo=${ hlId }&search=${ encodeURIComponent(this.searchQuery) }`;
     };
