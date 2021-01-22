@@ -1,11 +1,11 @@
 // ==UserScript==
 // @name         WebReader Page Markers
 // @namespace    https://b-fuze.dev/
-// @version      0.1.3
+// @version      0.1.4
 // @description  Add page markers to webreader.io
 // @author       b-fuze
 // @match        https://ebooks.cenreader.com/*
-// @run-at       document-body
+// @run-at       document-start
 // @grant        none
 // ==/UserScript==
 
@@ -316,12 +316,15 @@
   `);
     }
 
-    // Setup styles
-    installStyles(pageMarkerStyles);
-    installStyles(nestedTableOfContentStyles);
-    console.log("Applied styles");
-    // Fix markers on page
-    fixMarkers();
+    // Wait for document to load before fixing markers
+    // and other cosmetic features
+    addEventListener("DOMContentLoaded", () => {
+        // Setup styles
+        installStyles(pageMarkerStyles);
+        installStyles(nestedTableOfContentStyles);
+        // Fix markers on page
+        fixMarkers();
+    });
     // Attach Angular interception
     attach();
     // Make angular-based annotations accessible

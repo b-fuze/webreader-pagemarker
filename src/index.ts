@@ -4,13 +4,16 @@ import { installStyles } from "./utils";
 import { attach } from "./attach-angular";
 import { accessibleAnnotationList } from "./accessible-annotation-list";
 
-// Setup styles
-installStyles(pageMarkerStyles);
-installStyles(nestedTableOfContentStyles);
-console.log("Applied styles");
+// Wait for document to load before fixing markers
+// and other cosmetic features
+addEventListener("DOMContentLoaded", () => {
+  // Setup styles
+  installStyles(pageMarkerStyles);
+  installStyles(nestedTableOfContentStyles);
 
-// Fix markers on page
-fixMarkers();
+  // Fix markers on page
+  fixMarkers();
+});
 
 // Attach Angular interception
 attach();
