@@ -7,7 +7,7 @@ import { overrideController, overrideTemplate } from "./attach-angular";
  * that can only open in the current tab
  */
 export function accessibleAnnotationList() {
-  overrideController("readerInputItemViewer", function(args, next) {
+  overrideController("readerInputItemViewer", [], function(args, next) {
     this.bfuzeGetAnnotationUrl = function() {
       const annotationId = this.item.id;
       const bookId = location.hash.split("/")[2];

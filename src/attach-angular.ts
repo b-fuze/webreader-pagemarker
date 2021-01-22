@@ -4,7 +4,10 @@ const overriddenTemplates: {
 
 type ControllerOverride = (this: any, args: any[], next: (...args: any[]) => any) => any;
 const overriddenControllers: {
-  [name: string]: ControllerOverride,
+  [name: string]: {
+    deps: string[];
+    override: ControllerOverride,
+  },
 } = {};
 
 let origAngular: any = null;
@@ -67,14 +70,17 @@ export function attach() {
         if (modName === "app") {
           interceptFunc(mod, "component", (args, next) => {
             const componentName = args[0];
-            const componentMeta = args[1];
+            const componentMeta: {
+              controller: (string | Function)[],
+            } = args[1];
 
             if (componentName in overriddenControllers) {
-              const ctrl = componentMeta.controller.pop();
-              const override = overriddenControllers[componentName];
+              const ctrl = componentMeta.controller.pop()! as Function;
+              const { deps, override } = overriddenControllers[componentName];
 
               function next(this: any, args: any[]) {
-                return ctrl.apply(this, args);
+                console.log("APPLYING", args);
+                return ctrl.apply(this, args.slice(deps.length));
               }
 
               function newCtrl(this: any, ...args: any[]) {
@@ -82,8 +88,10 @@ export function attach() {
               }
 
               Object.defineProperty(newCtrl, "length", {
-                value: ctrl.length,
+                value: ctrl.length + deps.length,
               });
+
+              componentMeta.controller.splice(0, 0, ...deps);
               componentMeta.controller.push(newCtrl);
             }
 
@@ -139,8 +147,12 @@ export function overrideTemplate(path: string, src: string) {
  */
 export function overrideController(
   name: string, 
+  deps: string[],
   override: ControllerOverride,
 ) {
-  overriddenControllers[name] = override;
+  overriddenControllers[name] = {
+    deps,
+    override,
+  };
 }
 

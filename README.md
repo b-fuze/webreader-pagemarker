@@ -18,6 +18,8 @@ where a page starts or ends as multiple pages are usually collected on one page.
   annotations, well good luck finding any of them **again** among the many pages of
   annotations you might have...
 
+* And the same with search results... (see below for screenshot)
+
 ## How to use
  1. Install [Tampermonkey](https://www.tampermonkey.net/)
 
@@ -34,6 +36,10 @@ Page numbers
 Nesting
 
 ![Screenshot](./assets/screenshot-nesting.png)
+
+Open search result in new tab
+
+![Screenshot](./assets/screenshot-search-open-new-tab.png)
 
 ## License
 MIT

@@ -3,6 +3,7 @@ import { fixMarkers } from "./markers";
 import { installStyles } from "./utils";
 import { attach } from "./attach-angular";
 import { accessibleAnnotationList } from "./accessible-annotation-list";
+import { accessibleSearchResult } from "./accessible-search-result";
 
 // Wait for document to load before fixing markers
 // and other cosmetic features
@@ -20,4 +21,7 @@ attach();
 
 // Make angular-based annotations accessible
 accessibleAnnotationList();
+
+// Make search results accessible
+accessibleSearchResult();
 
