@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         WebReader Page Markers
 // @namespace    https://b-fuze.dev/
-// @version      0.1.5
+// @version      0.1.6
 // @description  Add page markers to webreader.io
 // @author       b-fuze
 // @match        https://ebooks.cenreader.com/*
@@ -221,7 +221,6 @@
                                 const ctrl = componentMeta.controller.pop();
                                 const { deps, override } = overriddenControllers[componentName];
                                 function next(args) {
-                                    console.log("APPLYING", args);
                                     return ctrl.apply(this, args.slice(deps.length));
                                 }
                                 function newCtrl(...args) {
@@ -322,11 +321,14 @@
     }
 
     function accessibleSearchResult() {
-        overrideController("searchResultItem", [], function (args, next) {
-            const [state] = args;
+        overrideController("searchResultItem", ["Library"], function (args, next) {
+            const [Library, state, stateParams] = args;
+            const bookContentId = stateParams.book;
+            const book = Library.getBookByContentId(bookContentId);
+            const page = book.getPage(this.result.pageContentId) || book.getPageByPath(this.result.pageContentId);
             this.bfuzeGetPageLink = function () {
                 const bookId = state.params.book;
-                const pageId = state.params.page;
+                const pageId = page.id;
                 const hlId = state.params.highlight;
                 return `https://ebooks.cenreader.com/#!/reader/${bookId}/page/${pageId}?highlight=${hlId}&scrollTo=${hlId}&search=${encodeURIComponent(this.searchQuery)}`;
             };
