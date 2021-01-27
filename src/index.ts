@@ -4,6 +4,7 @@ import { installStyles } from "./utils";
 import { attach } from "./attach-angular";
 import { accessibleAnnotationList } from "./accessible-annotation-list";
 import { accessibleSearchResult } from "./accessible-search-result";
+import { collapsibleTocItem } from "./collapsible-toc-item";
 
 // Wait for document to load before fixing markers
 // and other cosmetic features
@@ -24,4 +25,7 @@ accessibleAnnotationList();
 
 // Make search results accessible
 accessibleSearchResult();
+
+// Make toc item arrows *only* collapse/expand
+collapsibleTocItem();
 

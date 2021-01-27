@@ -20,6 +20,10 @@ where a page starts or ends as multiple pages are usually collected on one page.
 
 * And the same with search results... (see below for screenshot)
 
+* It also lets you expand and collapse table of content menu items without
+  forcibly navigating to them; before, clicking on the expand/collapse arrows
+  also forcefully navigated to the page.
+
 ## How to use
  1. Install [Tampermonkey](https://www.tampermonkey.net/)
 

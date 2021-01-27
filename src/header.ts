@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         WebReader Page Markers
 // @namespace    https://b-fuze.dev/
-// @version      0.1.6
+// @version      0.1.7
 // @description  Add page markers to webreader.io
 // @author       b-fuze
 // @match        https://ebooks.cenreader.com/*
